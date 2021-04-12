@@ -1,115 +1,93 @@
-(function () {
-  function buildQuiz() {
-    const output = [];
+//used webdevtrick and stackoverflow as a source of information/code
+import { questions } from "./questions";
 
-    myQuestions.forEach((currentQuestion, questionNumber) => {
-      const answers = [];
+function Quiz(questions) {
+  this.questions = questions; //questions array
+  this.CurrentQuestion = 0; //tells you which question youre on
+  this.score = 0; //score
+}
 
-      for (letter in currentQuestion.answers) {
-        answers.push(
-          `<label>
-                <input type="radio" name="question${questionNumber}" value="${letter}">
-                ${letter} :
-                ${currentQuestion.answers[letter]}
-              </label>`
-        );
-      }
+Quiz.prototype.getQuestionIndex = function () {
+  return this.questions[this.questionIndex];
+};
 
-      output.push(
-        `<div class="question"> ${currentQuestion.question} </div>
-            <div class="answers"> ${answers.join("")} </div>`
-      );
-    });
-
-    quizContainer.innerHTML = output.join("");
+Quiz.prototype.guess = function (answer) {
+  if (this.getQuestionIndex().isCorrectAnswer(answer)) {
   }
 
-  function showResults() {
-    const answerContainers = quizContainer.querySelectorAll(".answers");
+  this.questionIndex++; //moves to the next question if correct
+};
 
-    let numCorrect = 0;
+Quiz.prototype.isEnded = function () {
+  return this.questionIndedx === this.questions.length;
+};
 
-    myQuestions.forEach((currentQuestion, questionNumber) => {
-      const answerContainer = answerContainers[questionNumber];
-      const selector = `input[name=question${questionNumber}]:checked`;
-      const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+questions.prototype.isCorrectAnswer = function (choice) {
+  return this.answer === choice;
+};
 
-      if (userAnswer === currentQuestion.correctAnswer) {
-        numCorrect++;
+function populate() {
+  if (quiz.isEnded()) {
+    showScores();
+  } else {
+    const element = document.getElementById("question");
+    element.innderHTML = quiz.getQuestionIndex().text;
 
-        answerContainers[questionNumber].style.color = "lightgreen";
-      } else {
-        answerContainers[questionNumber].style.color = "red";
-      }
-    });
+    let choices = quiz.getQuestionIndex().choices;
+    for (let i = 0; 1 < choices.length; i++) {
+      let element = document.getElementById("choice" + i);
+      element.innerHTML = choices[i];
+      guess("btn" + i, choices[i]);
+    }
 
-    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
+    showProgress();
   }
+}
 
-  const quizContainer = document.getElementById("quiz");
-  const resultsContainer = document.getElementById("results");
-  const submitButton = document.getElementById("submit");
-  const myQuestions = [
-    {
-      question: "Who is the best teacher at Staten Island Tech?",
-      answers: {
-        a: "Mr. Whalen",
-        b: "Mr. Henriques",
-        c: "Ms. Maslukova",
-        d: "Ms. Danna",
-      },
-      correctAnswer: "a",
-    },
-    {
-      question: "What is the goal of humanity?",
-      answers: {
-        a: "To realize what is the Principle of Universitality",
-        b:
-          "It would be better comprehended if we thought about distinguishing between it and Divinity",
-        c: "Moral Effort towards Justice",
-        d: "Why should we have a goal? YOLO",
-      },
-      correctAnswer: "d",
-    },
-    {
-      question: "Which prange came first? the fruit or the color",
-      answers: {
-        a: "Fruit",
-        b: "Color",
-        c: "Both at the same time",
-        d:
-          "The fruit originally came from China – the German word Apfelsine and the Dutch sinaasappel (Chinese apple) reflect this – but our word ultimately comes from the Old Persian word narang",
-      },
-      correctAnswer: "d",
-    },
-    {
-      question:
-        "Do our human accomplishments have a long-term, universal significance? or when the world ends do we all end with it, including what we achived?",
-      answers: {
-        a:
-          "Significance is subjuective. If there is no one ot assign significance, there is none",
-        b:
-          "The real question is, who would our achievements be significant to?",
-        c: "It depends in which context you allocate Universal Significance",
-        d:
-          "Can't we just die in peace without haveing to think about mind boggling questions to the universe",
-      },
-      correctAnswer: "d",
-    },
-    {
-      question: "What is the meaning of life?",
-      answers: {
-        a: "To deny it. none of this ever existed",
-        b:
-          "How do we know that the lives we're living aren't just hallucinatins of our own imaginations?",
-        c: "42",
-        d: "No one cares",
-      },
-      correctAnswer: "b",
-    },
-  ];
+function guess(id, guess) {
+  let button = document.getElementById(id);
+  button.onclick = function () {
+    quiz.guess(guess);
+    populate();
+  };
+}
 
-  buildQuiz();
+function showProgress() {
+  let currentQuestionNumber = quiz.questionIndex + 1;
+  let element = document.getElementById("progress");
+  element.innerHTML =
+    "Question " + currentQuestionNumber + " of " + quiz.questions.length;
+}
 
-  submitButton.addEventListener("click", showResults);
-})();
+function showScores() {
+  let gameOverHTML = "<h1>Result</h1>";
+  gameOverHTML += "<h2 id='score'> Your scores: " + quiz.score + "</h2>";
+  let element = document.getElementById("quiz");
+  element.innerHTML = gameOverHTML;
+}
+
+const QuizGame = {
+  populateIdwithHTML: function (id, content) {
+    const element = document.getElementById(id); //gatheres specific id element from HTML
+    element.innerHTML = content;
+  },
+
+  showNextQuestion: function () {
+    if (quiz.reachesEnd()) {
+      this.showResults();
+    } else {
+      this.showQuestion();
+      this.showChoices();
+      this.showProgress();
+      this.showScore();
+    }
+  },
+
+  showQuestion: function () {
+    this.populateIdwithHTML("question", quiz.getCurrentQuestion().text);
+  },
+};
+
+const quiz = new Quiz(questions);
+console.log(QuizGame.showNextQuestion());
+populate();

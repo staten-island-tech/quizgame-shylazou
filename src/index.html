@@ -3,14 +3,31 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quiz Game</title>
-    <link rel="stylesheet" href="scss/main.scss" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rationale"">
+    <title>QuizGame</title>
+    <link rel="stylesheet" href="styles/main.scss" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=rationale"
+    />
   </head>
   <body>
     <script src="js/index.js"></script>
-    <div id="quiz"></div>
-    <button id="submit"> Submit Quiz </button>
-    <div id="results"></divid>
+    <div class="grid">
+      <div id="quiz">
+        <h1>Welcome to the QuizGame</h1>
+        <p id="question"></p>
+        <div class="buttons">
+          <button id="btn0"><span id="choice0"></span></button>
+          <button id="btn1"><span id="choice1"></span></button>
+          <button id="btn2"><span id="choice2"></span></button>
+          <button id="btn3"><span id="choice3"></span></button>
+          <button id="btn4"><span id="choice4"></span></button>
+
+          <footer>
+            <p><span id="progress">Results</span></p>
+          </footer>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
