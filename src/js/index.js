@@ -54,7 +54,7 @@ function guess(id, guess) {
 
 function showProgress() {
   let currentQuestionNumber = quiz.questionIndex + 1;
-  let element = document.getElementById("progress");
+  const element = document.getElementById("progress");
   element.innerHTML =
     "Question " + currentQuestionNumber + " of " + quiz.questions.length;
 }
@@ -66,6 +66,7 @@ function showScores() {
   element.innerHTML = gameOverHTML;
 }
 
+/*
 const QuizGame = {
   populateIdwithHTML: function (id, content) {
     const element = document.getElementById(id); //gatheres specific id element from HTML
@@ -88,6 +89,7 @@ const QuizGame = {
   },
 };
 
+*/
 const quiz = new Quiz(questions);
 console.log(QuizGame.showNextQuestion());
 populate();
