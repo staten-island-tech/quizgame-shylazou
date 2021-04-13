@@ -1,17 +1,15 @@
-//used webdevtrick as a source of information/code
 function Question(text, choices, answer) {
-  //object constructor function to create multiple questions
   this.text = text;
   this.choices = choices;
   this.answer = answer;
 }
-//.this substitutes a current object for the next object
+//creates multiple objects of the same type (constructor function)
+//.this replaces the current object with the next object
 
 Question.prototype.isCorrect = function (choice) {
-  return this.amswer === choice;
-
-  //if chosen choice matches the correct answer, returns as true
+  return this.answer === choice;
 };
+//if chosen choice matches the correct answer returns as true
 
 const questions = [
   new Question(
@@ -19,7 +17,6 @@ const questions = [
     ["Mr, Whalen", "Mr. Henriques", "Ms. Maslukova", "Ms. Danna"],
     "Mr. Whalen"
   ),
-
   new Question(
     "What is the goal of Humanity?",
     [
@@ -30,7 +27,6 @@ const questions = [
     ],
     "Why should we have a goal? YOLO"
   ),
-
   new Question(
     "Which orange came first, the fruit or the color",
     [
@@ -41,9 +37,8 @@ const questions = [
     ],
     "The fruit originally came from China- the German word Apfelsine and the Dutch sinaasappel reflect this but our word comes from the Old Persian work narang"
   ),
-
   new Question(
-    "Do our human accomplishments have a long-term, universal significance? or when the world ends do we all end with it, including what we achived?",
+    "Do our human accomplishments have a long-term, universal significance?",
     [
       "Significance is subjuective. If there is no one ot assign significance, there is none",
       "Can't we just die in peace without haveing to think about mind boggling questions to the universe",
@@ -51,6 +46,26 @@ const questions = [
       "The real question is, who would our achievements be significant to?",
     ],
     "Can't we just die in peace without haveing to think about mind boggling questions to the universe"
+  ),
+  new Question(
+    "Where is the best place to go after school",
+    [
+      "Home",
+      "Vivi's Bubble Tea",
+      "The place with the death chicken wings",
+      "What if I live at school",
+    ],
+    "Home"
+  ),
+  new Question(
+    "Which came first the chicken or the egg",
+    [
+      "Chicken Chicken",
+      "Egg Egg",
+      "Two birds that hadn't evolved into chickens created the first egg",
+      "Who cares? I eat both",
+    ],
+    "Two birds that hadn't evolved into chickens created the first egg"
   ),
 ];
 
